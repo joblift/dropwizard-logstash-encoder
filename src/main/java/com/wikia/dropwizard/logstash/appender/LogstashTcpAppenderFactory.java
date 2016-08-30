@@ -3,18 +3,20 @@ package com.wikia.dropwizard.logstash.appender;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
-import ch.qos.logback.core.Layout;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import net.logstash.logback.appender.LogstashTcpSocketAppender;
 import net.logstash.logback.encoder.LogstashEncoder;
 
+import io.dropwizard.logging.async.AsyncAppenderFactory;
+import io.dropwizard.logging.filter.LevelFilterFactory;
+import io.dropwizard.logging.layout.LayoutFactory;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.HashMap;
 
 @JsonTypeName("logstash-tcp")
-public class LogstashTcpAppenderFactory extends AbstractLogstashAppenderFactory {
+public class LogstashTcpAppenderFactory extends AbstractLogstashAppenderFactory<ILoggingEvent> {
   private boolean includeCallerData = false;
 
   @Min(1)
@@ -45,7 +47,10 @@ public class LogstashTcpAppenderFactory extends AbstractLogstashAppenderFactory 
     this.queueSize = queueSize;
   }
 
-  public Appender<ILoggingEvent> build(LoggerContext context, String applicationName, Layout<ILoggingEvent> layout) {
+  public Appender<ILoggingEvent> build(LoggerContext context, String applicationName,
+                                       LayoutFactory<ILoggingEvent> layoutFactory,
+                                       LevelFilterFactory<ILoggingEvent> levelFilterFactory,
+                                       AsyncAppenderFactory<ILoggingEvent> asyncAppenderFactory) {
     final LogstashTcpSocketAppender appender = new LogstashTcpSocketAppender();
     final LogstashEncoder encoder = new LogstashEncoder();
 
@@ -71,10 +76,10 @@ public class LogstashTcpAppenderFactory extends AbstractLogstashAppenderFactory 
     }
 
     appender.setEncoder(encoder);
-    addThresholdFilter(appender, threshold);
+    appender.addFilter(levelFilterFactory.build(threshold));
     encoder.start();
     appender.start();
 
-    return wrapAsync(appender);
+    return wrapAsync(appender, asyncAppenderFactory);
   }
 }

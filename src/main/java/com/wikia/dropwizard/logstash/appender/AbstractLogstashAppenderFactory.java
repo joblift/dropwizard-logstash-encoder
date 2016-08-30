@@ -1,5 +1,6 @@
 package com.wikia.dropwizard.logstash.appender;
 
+import ch.qos.logback.core.spi.DeferredProcessingAware;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.logging.AbstractAppenderFactory;
 
@@ -8,7 +9,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 
-abstract class AbstractLogstashAppenderFactory extends AbstractAppenderFactory {
+abstract class AbstractLogstashAppenderFactory<E extends DeferredProcessingAware> extends AbstractAppenderFactory<E> {
   @NotNull
   protected String host;
 
