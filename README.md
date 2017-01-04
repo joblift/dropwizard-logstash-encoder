@@ -1,5 +1,8 @@
 # dropwizard-logback-logstash-encoder
 
+# WARNING
+This is a fork of from the [stalar](https://github.com/stalar/dropwizard-logstash-encoder/) fork of the [larrymyers](https://github.com/larrymyers/dropwizard-logstash-encoder) fork, which itself is a fork of the poorly maintained [wikia](https://github.com/Wikia/dropwizard-logstash-encoder) fork. Don't expected this fork to be maintained in time.
+
 [Dropwizard](http://dropwizard.io/) logging addon for sending logs using the [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder). 
 This is needed because Dropwizard overwrites the default mechanism for loading logback configuration (logback.xml) in favor of its application.yml files.
 
