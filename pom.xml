@@ -4,7 +4,7 @@
 
 	<groupId>de.joblift</groupId>
 	<artifactId>dropwizard-logstash-encoder</artifactId>
-	<version>3.0.0</version>
+	<version>3.0.1</version>
 
 	<name>dropwizard-logstash-encoder</name>
 	<description>
