@@ -6,21 +6,21 @@ This is a fork of from the [stalar](https://github.com/stalar/dropwizard-logstas
 [Dropwizard](http://dropwizard.io/) logging addon for sending logs using the [logstash-logback-encoder](https://github.com/logstash/logstash-logback-encoder). 
 This is needed because Dropwizard overwrites the default mechanism for loading logback configuration (logback.xml) in favor of its application.yml files.
 
-**NOTE**: This is an actively maintained fork that will closely track dropwizard releases. Currently 0.8.4 is targeted
-and once 0.9.0 emerges this will be updated as well.
-
 ## Dropwizard Version Compatibility
 
 * dropwizard 0.8.4 => dropwizard-logstash-encoder 1.1.0
 * dropwizard 0.9.0 => dropwizard-logstash-encoder 1.2.0
+* dropwizard 1.3.14 => dropwizard-logstash-encoder 3.0.0 (Java 11)
 
 ## Installation
+Must be manually build and added to your repository manager.
+
 Maven:
 ```xml
 <dependency>
-  <groupId>com.larrymyers</groupId>
+  <groupId>de.joblift</groupId>
   <artifactId>dropwizard-logstash-encoder</artifactId>
-  <version>1.2.0</version>
+  <version>3.0.0</version>
 </dependency>
 ```
 
@@ -75,6 +75,12 @@ LoggerFactory.getLogger("myTestLogger").warn(
 	),
 	"warning! warning!");
 ```
+
+Or even more simpler, by using [de.galan:commons](https://github.com/galan/commons) Say class, eg.:
+```java
+Say.warn("Hello {key}", "World");
+```
+
 ## License
 
 Distributed under the Eclipse Public License either version 1.0 or (at
